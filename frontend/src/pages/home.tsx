@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useAccount } from '@gear-js/react-hooks';
 import { LoginSection } from 'components/sections/login-section';
 import { GameSection } from '../components/sections/game-section';
@@ -8,27 +9,25 @@ import { Loader } from '../components/loaders/loader';
 import { cn } from '../app/utils';
 // import { useEffect } from 'react';
 
-export const Home = () => {
+export const Home = memo(() => {
   useInitGame();
   useWasmState();
-
-  const { account } = useAccount();
-  const { game, gameWasm } = useGame();
+  const {
+    account
+  } = useAccount();
+  const {
+    game,
+    gameWasm
+  } = useGame();
 
   // useEffect(() => {
   //   console.log({ game, gameWasm });
   // }, [game, gameWasm]);
 
-  return (
-    <section className={cn('grid grow', !account && 'place-items-center')}>
-      {account ? (
-        game && <>{game.isStarted ? gameWasm ? <GameSection /> : <Loader /> : <RegistrationSection />}</>
-      ) : (
-        <div className="flex flex-col items-center justify-center gap-9 grow">
+  return <section className={cn('grid grow', !account && 'place-items-center')}>
+      {account ? game && <>{game.isStarted ? gameWasm ? <GameSection /> : <Loader /> : <RegistrationSection />}</> : <div className="flex flex-col items-center justify-center gap-9 grow">
           <p>Connect your account to start the game</p>
           <LoginSection />
-        </div>
-      )}
-    </section>
-  );
-};
+        </div>}
+    </section>;
+});

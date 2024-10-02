@@ -1,15 +1,16 @@
+import { memo } from "react";
 import { Dialog } from '@headlessui/react';
 import { Dispatch, SetStateAction } from 'react';
 import { PopupContainer } from '../popup-container';
-
 type Props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
 };
-
-export const SelectDominoPopup = ({ setIsOpen, isOpen }: Props) => {
-  return (
-    <PopupContainer isOpen={isOpen} setIsOpen={setIsOpen}>
+export const SelectDominoPopup = memo(({
+  setIsOpen,
+  isOpen
+}: Props) => {
+  return <PopupContainer isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 border-4 border-primary text-left align-middle shadow-xl transition-all">
         <div>
           <Dialog.Title as="h3" className="text-lg leading-6 font-semibold text-dark-500" id="modal-headline">
@@ -28,6 +29,5 @@ export const SelectDominoPopup = ({ setIsOpen, isOpen }: Props) => {
           </div>
         </div>
       </div>
-    </PopupContainer>
-  );
-};
+    </PopupContainer>;
+});
