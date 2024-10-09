@@ -1,26 +1,29 @@
+import { useRef } from "react";
 import { createContext, ReactNode, useState } from "react";
-
-export const AppCtx = createContext({} as ReturnType<typeof useProgram>);
-
+export const AppCtx = createContext(({} as ReturnType<typeof useProgram>));
 const useProgram = () => {
-  const [isPending, setIsPending] = useState<boolean>(false);
-  const [isAllowed, setIsAllowed] = useState<boolean>(false);
-  const [openEmptyPopup, setOpenEmptyPopup] = useState<boolean>(false);
-  const [openWinnerPopup, setOpenWinnerPopup] = useState<boolean>(false);
-
+  const isPending = useRef<boolean>(false);
+  const isAllowed = useRef<boolean>(false);
+  const openEmptyPopup = useRef<boolean>(false);
+  const openWinnerPopup = useRef<boolean>(false);
   return {
-    isPending,
+    isPending: isPending.current,
     setIsPending,
-    isAllowed,
+    isAllowed: isAllowed.current,
     setIsAllowed,
-    openEmptyPopup,
+    openEmptyPopup: openEmptyPopup.current,
     setOpenEmptyPopup,
-    openWinnerPopup,
+    openWinnerPopup: openWinnerPopup.current,
     setOpenWinnerPopup
   };
 };
-
-export function AppProvider({ children }: { children: ReactNode }) {
-  const { Provider } = AppCtx;
+export function AppProvider({
+  children
+}: {
+  children: ReactNode;
+}) {
+  const {
+    Provider
+  } = AppCtx;
   return <Provider value={useProgram()}>{children}</Provider>;
 }
